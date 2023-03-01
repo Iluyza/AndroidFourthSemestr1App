@@ -13,3 +13,4 @@ enum class WindDeg (
     NW(deg=315)
 }
 
+
