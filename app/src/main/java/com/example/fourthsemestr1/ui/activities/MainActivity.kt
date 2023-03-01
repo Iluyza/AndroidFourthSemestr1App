@@ -23,11 +23,11 @@ class MainActivity : AppCompatActivity() {
         controller = binding?.navHostFragmentMain?.id?.let { findController(it) }
 
         lifecycleScope.launch {
-            try {
+            kotlin.runCatching {
                 val response = repository.getWeather("Kazan")
                 Log.e("Response","$response")
-            } catch (ex: Exception) {
-                Log.e("arg", ex.message.toString())
+            } .onFailure {
+                Log.e("arg", it.message.toString())
             }
         }
     }
@@ -38,3 +38,4 @@ class MainActivity : AppCompatActivity() {
         controller = null
     }
 }
+

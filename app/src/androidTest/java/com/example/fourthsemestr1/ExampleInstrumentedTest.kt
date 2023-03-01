@@ -22,3 +22,4 @@ class ExampleInstrumentedTest {
         assertEquals("com.example.fourthsemestr1", appContext.packageName)
     }
 }
+
