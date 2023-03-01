@@ -18,6 +18,14 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
 }
 
+detekt {
+    buildUponDefaultConfig = true
+
+    source = files(projectDir)
+    config = files("${project.rootDir}/detekt.yml")
+    parallel = true
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

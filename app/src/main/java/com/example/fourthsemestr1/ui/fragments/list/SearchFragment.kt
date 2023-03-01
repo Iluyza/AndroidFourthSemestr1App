@@ -1,6 +1,7 @@
 package com.example.fourthsemestr1.ui.fragments.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +16,18 @@ import com.example.fourthsemestr1.databinding.FragmentSearchBinding
 import com.example.fourthsemestr1.models.CityWeather
 import com.example.fourthsemestr1.models.WindDeg
 import com.example.fourthsemestr1.ui.fragments.list.recycler.ListRecyclerAdapter
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 private const val COUNT_OF_CITIES_IN_RECYCLER_VIEW = 10
 private const val HARDCODE_LAT = 55.7887
 private const val HARDCODE_LON = 49.1221
 
-class SearchFragment() : Fragment() {
+class SearchFragment : Fragment() {
     private var binding: FragmentSearchBinding? = null
     private val repository by lazy {
         WeatherRepository()
@@ -50,10 +55,9 @@ class SearchFragment() : Fragment() {
         binding?.svSearch?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 Timber.d("Pressed query button")
-//                getWeatherList(query)
-                try {
+                kotlin.runCatching {
                     getWeather(query)
-                } catch (ex: Exception) {
+                }.onFailure {
                     Toast.makeText(
                         context,
                         "Не удалось найти",
@@ -70,14 +74,6 @@ class SearchFragment() : Fragment() {
         })
     }
 
-//    private fun getWeather(city: String) {
-//        scope.launch {
-//            withContext(Dispatchers.IO) {
-//                val weather = repository.getWeather(city)
-//                showDetailsFragment(weather.name)
-//            }
-//        }
-//    }
     private fun getWeather(city: String) {
         scope.launch {
             withContext(Dispatchers.Main) {
@@ -90,7 +86,7 @@ class SearchFragment() : Fragment() {
     private fun getCities(city: String?) {
         var weather: CityWeather?
         scope.launch {
-            try {
+            kotlin.runCatching {
                 withContext(Dispatchers.IO) {
                     weather = city?.let { repository.getWeather(it) }
                 }
@@ -107,7 +103,7 @@ class SearchFragment() : Fragment() {
                     }
                 }
                 listRecyclerAdapter?.submitList(weatherCities)
-            } catch (ex: Exception) {
+            }.onFailure {
                 Toast.makeText(
                     context,
                     "Не удалось найти",
@@ -127,19 +123,19 @@ class SearchFragment() : Fragment() {
         }
         listRecyclerAdapter?.submitList(
             arrayListOf(
-                CityWeather(551487, "Kazan", 0.0, 0.0, 0.0, 250, WindDeg.NW),
-                CityWeather(551487, "Kazan", 0.0, 0.0, 0.0, 250, WindDeg.NW),
-                CityWeather(551487, "Kazan", 0.0, 0.0, 0.0, 250, WindDeg.NW),
-                CityWeather(551487, "Kazan", 0.0, 0.0, 0.0, 250, WindDeg.NW),
-                CityWeather(551487, "Kazan", 0.0, 0.0, 0.0, 250, WindDeg.NW),
-                CityWeather(551487, "Kazan", 0.0, 0.0, 0.0, 250, WindDeg.NW),
+                CityWeather(id=551_487, name="Kazan", lat=0.0, lon=0.0, temp=0.0, humidity=250, WindDeg.NW),
+                CityWeather(id=551_487, name="Kazan", lat=0.0, lon=0.0, temp=0.0, humidity=250, WindDeg.NW),
+                CityWeather(id=551_487, name="Kazan", lat=0.0, lon=0.0, temp=0.0, humidity=250, WindDeg.NW),
+                CityWeather(id=551_487, name="Kazan", lat=0.0, lon=0.0, temp=0.0, humidity=250, WindDeg.NW),
+                CityWeather(id=551_487, name="Kazan", lat=0.0, lon=0.0, temp=0.0, humidity=250, WindDeg.NW),
+                CityWeather(id=551_487, name="Kazan", lat=0.0, lon=0.0, temp=0.0, humidity=250, WindDeg.NW),
             )
         )
         getCities(HARDCODE_LAT, HARDCODE_LON, COUNT_OF_CITIES_IN_RECYCLER_VIEW)
     }
 
     private fun getCities(lat: Double, lon: Double, cnt: Int) {
-   //todo
+        Log.e("Log","lat is $lat lon is $lon cnt is $cnt" )
     }
 
     private fun showDetailsFragment(city: String) {

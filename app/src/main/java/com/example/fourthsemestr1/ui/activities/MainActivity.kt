@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val response = repository.getWeather("Kazan")
-//                Log.e("Response","$response")
+                Log.e("Response","$response")
             } catch (ex: Exception) {
                 Log.e("arg", ex.message.toString())
             }
