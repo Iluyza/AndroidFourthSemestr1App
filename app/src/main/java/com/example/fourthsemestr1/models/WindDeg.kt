@@ -3,12 +3,13 @@ package com.example.fourthsemestr1.models
 enum class WindDeg (
     val deg: Int
 ) {
-    N(0),
-    NE(45),
-    E(90),
-    SE(135),
-    S(180),
-    SW(225),
-    W(270),
-    NW(315)
+    N(deg=0),
+    NE(deg=45),
+    E(deg=90),
+    SE(deg=135),
+    S(deg=180),
+    SW(deg=225),
+    W(deg=270),
+    NW(deg=315)
 }
+
