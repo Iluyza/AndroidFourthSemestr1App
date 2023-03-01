@@ -16,3 +16,4 @@ interface WeatherApi {
         @Query("cnt") cnt: Int
     ) : CitiesResponse
 }
+
