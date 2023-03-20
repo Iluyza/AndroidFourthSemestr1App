@@ -1,4 +1,4 @@
-package com.example.fourthsemestr1.models.convertors
+package com.example.fourthsemestr1.presentation.convertors
 
 import com.example.fourthsemestr1.R
 
@@ -14,5 +14,4 @@ object TempColorConverter {
         }
     }
 }
-
 

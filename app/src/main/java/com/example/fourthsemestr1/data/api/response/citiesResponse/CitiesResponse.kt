@@ -12,3 +12,4 @@ data class CitiesResponse(
     @SerializedName("message")
     val message: String
 )
+

@@ -1,9 +1,10 @@
-package com.example.fourthsemestr1.models.convertors
+package com.example.fourthsemestr1.data.api.mapper
 
-import com.example.fourthsemestr1.models.WindDeg
+import com.example.fourthsemestr1.domain.enum.WindDeg
 
-object WindDegConvertor {
-    fun convertWindDeg(deg: Int): WindDeg {
+
+class WindDegMapper {
+    fun map(deg: Int) : WindDeg {
         return when ((deg / 45 + 2* (deg%45) / 45) * 45 % 360) {
             0 -> WindDeg.N
             45 -> WindDeg.NE

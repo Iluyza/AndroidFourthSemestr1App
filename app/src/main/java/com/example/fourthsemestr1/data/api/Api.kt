@@ -5,15 +5,19 @@ import com.example.fourthsemestr1.data.api.response.weatherResponse.WeatherRespo
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface WeatherApi {
+interface Api {
     @GET("weather")
     suspend fun getWeather(@Query("q") city: String): WeatherResponse
 
+    @GET("weather")
+    suspend fun getWeather(@Query("id") id: Int): WeatherResponse
+
     @GET("find")
-    suspend fun getWeatherCities(
+    suspend fun getWeathers(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("cnt") cnt: Int
     ) : CitiesResponse
 }
+
 

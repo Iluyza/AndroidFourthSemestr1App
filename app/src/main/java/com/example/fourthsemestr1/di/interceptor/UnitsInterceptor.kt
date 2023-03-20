@@ -1,4 +1,4 @@
-package com.example.fourthsemestr1.data.api.interceptor
+package com.example.fourthsemestr1.di.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -20,3 +20,4 @@ class UnitsInterceptor : Interceptor {
         )
     }
 }
+
