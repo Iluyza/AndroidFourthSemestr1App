@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.fourthsemestr1.presentation.fragments.list.SearchFragment"
+        android:name="com.example.fourthsemestr1.presentation.fragments.cities.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.example.fourthsemestr1.presentation.fragments.DetailsFragment"
+        android:name="com.example.fourthsemestr1.presentation.fragments.weather.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <action
@@ -26,5 +26,9 @@
         <argument
             android:name="city_id"
             app:argType="integer"/>
+
+        <argument
+            android:name="transitionName"
+            app:argType="string"/>
     </fragment>
 </navigation>

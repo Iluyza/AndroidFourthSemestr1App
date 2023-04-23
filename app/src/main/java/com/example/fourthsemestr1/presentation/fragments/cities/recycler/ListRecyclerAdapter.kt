@@ -1,4 +1,4 @@
-package com.example.fourthsemestr1.presentation.fragments.list.recycler
+package com.example.fourthsemestr1.presentation.fragments.cities.recycler
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -21,7 +21,6 @@ class ListRecyclerAdapter(
     ) = holder.bind(
         getItem(position)
     )
-
 }
 
 

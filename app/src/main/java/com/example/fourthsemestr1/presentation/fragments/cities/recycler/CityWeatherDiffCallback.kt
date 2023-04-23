@@ -1,4 +1,4 @@
-package com.example.fourthsemestr1.presentation.fragments.list.recycler
+package com.example.fourthsemestr1.presentation.fragments.cities.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.fourthsemestr1.domain.entity.Weather
