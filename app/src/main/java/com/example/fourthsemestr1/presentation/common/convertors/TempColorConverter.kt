@@ -1,4 +1,4 @@
-package com.example.fourthsemestr1.presentation.convertors
+package com.example.fourthsemestr1.presentation.common.convertors
 
 import com.example.fourthsemestr1.R
 

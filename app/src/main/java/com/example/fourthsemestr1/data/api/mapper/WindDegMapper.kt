@@ -1,9 +1,11 @@
 package com.example.fourthsemestr1.data.api.mapper
 
 import com.example.fourthsemestr1.domain.enum.WindDeg
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class WindDegMapper {
+@Singleton
+class WindDegMapper @Inject constructor() {
     fun map(deg: Int) : WindDeg {
         return when ((deg / 45 + 2* (deg%45) / 45) * 45 % 360) {
             0 -> WindDeg.N
@@ -17,4 +19,5 @@ class WindDegMapper {
         }
     }
 }
+
 

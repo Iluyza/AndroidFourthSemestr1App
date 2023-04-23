@@ -3,11 +3,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.3.0"
+        classpath "com.android.tools.build:gradle:7.3.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-rc02"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0-alpha09"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.37"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,7 +19,11 @@ buildscript {
 plugins {
     id "io.gitlab.arturbosch.detekt" version "1.22.0"
     id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
-    id 'androidx.navigation.safeargs' version '2.4.2' apply false
+    id "scabbard.gradle" version "0.5.0"
+}
+scabbard {
+    enabled true
+    outputFormat "svg"
 }
 
 detekt {
@@ -26,6 +32,21 @@ detekt {
     source = files(projectDir)
     config = files("${project.rootDir}/detekt.yml")
     parallel = true
+}
+allprojects {
+    /*repositories {
+        google()
+        mavenCentral()
+    }*/
+
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "com.github.kittinunf.result" && requested.name == "result" && requested.version == "3.0.0") {
+                useVersion("3.0.1")
+                because("Transitive dependency of Scabbard, currently not available on mavenCentral()")
+            }
+        }
+    }
 }
 
 task clean(type: Delete) {

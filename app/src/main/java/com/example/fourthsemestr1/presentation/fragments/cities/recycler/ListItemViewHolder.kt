@@ -1,12 +1,13 @@
-package com.example.fourthsemestr1.presentation.fragments.list.recycler
+package com.example.fourthsemestr1.presentation.fragments.cities.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.fourthsemestr1.databinding.ListItemCityBinding
 import com.example.fourthsemestr1.domain.entity.Weather
-import com.example.fourthsemestr1.presentation.convertors.TempColorConverter.getColor
+import com.example.fourthsemestr1.presentation.common.convertors.TempColorConverter.getColor
 
 class ListItemViewHolder(
     private val binding: ListItemCityBinding,
@@ -23,6 +24,10 @@ class ListItemViewHolder(
                     getColor(weather.temp)
                 )
             )
+            ivIconItem.run {
+                load(weather.iconUrl)
+                transitionName = "Item_${weather.id}"
+            }
 
             root.setOnClickListener {
                 onItemClick(weather.id)
