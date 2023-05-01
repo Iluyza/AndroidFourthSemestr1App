@@ -3,20 +3,19 @@ package com.example.fourthsemestr1.di.module
 import android.content.Context
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fourthsemestr1.WeatherApp
 import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
 
+@InstallIn(SingletonComponent::class)
 @Module
 class AppModule {
-
-    @Provides
-    fun provideContext(weatherApp: WeatherApp): Context = weatherApp.applicationContext
-
     @Provides
     @DefaultDispatcher
     fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
@@ -43,7 +42,7 @@ class AppModule {
 
     @Provides
     fun provideSmoothScroller(
-        context: Context
+        @ApplicationContext context: Context
     ): RecyclerView.SmoothScroller = object : LinearSmoothScroller(context) {
         override fun getVerticalSnapPreference(): Int {
             return SNAP_TO_START
@@ -52,6 +51,6 @@ class AppModule {
 
     @Provides
     fun provideFusedLocationProviderClient(
-        context: Context
+        @ApplicationContext context: Context
     ) = LocationServices.getFusedLocationProviderClient(context)
 }

@@ -14,14 +14,13 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fourthsemestr1.WeatherApp
 import com.example.fourthsemestr1.databinding.FragmentSearchBinding
 import com.example.fourthsemestr1.presentation.fragments.cities.recycler.ListRecyclerAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -30,6 +29,7 @@ private const val COUNT_OF_CITIES_IN_LIST = 20
 private const val DEFAULT_LAT = 55.7887
 private const val DEFAULT_LON = 49.1221
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     companion object {
@@ -46,12 +46,7 @@ class SearchFragment : Fragment() {
     private var userLat: Double = DEFAULT_LAT
     private var userLon: Double = DEFAULT_LON
 
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-
-    private val viewModel: CityListViewModel by viewModels {
-        factory
-    }
+    private val viewModel: CityListViewModel by viewModels()
 
     @Inject
     lateinit var smoothScroller: RecyclerView.SmoothScroller
@@ -75,11 +70,6 @@ class SearchFragment : Fragment() {
                 ).show()
             }
         }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        (activity?.application as WeatherApp).appComponent.inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -14,10 +14,10 @@ class GetWeatherListUseCase @Inject constructor(
     private val weatherRepository: WeatherRepository,
     @AppModule.DefaultDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) {
+
     suspend operator fun invoke(lat: Double, lon: Double, cnt: Int): MutableList<Weather> {
         return withContext(dispatcher) {
             weatherRepository.getWeatherList(lat, lon, cnt)
         }
     }
 }
-

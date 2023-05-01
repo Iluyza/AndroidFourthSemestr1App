@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.fourthsemestr1.domain.entity.Weather
 import com.example.fourthsemestr1.domain.usecase.GetWeatherUseCase
 import com.example.fourthsemestr1.domain.usecase.GetWeatherListUseCase
+import com.example.fourthsemestr1.presentation.common.utils.SingleLiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class CityListViewModel @Inject constructor(
     private val getWeatherUseCase: GetWeatherUseCase,
     private val getWeatherListUseCase: GetWeatherListUseCase
@@ -19,7 +22,7 @@ class CityListViewModel @Inject constructor(
     private val _weatherList: MutableLiveData<Result<List<Weather>>> = MutableLiveData()
     val weatherList: LiveData<Result<List<Weather>>> = _weatherList
 
-    private val _cityId: MutableLiveData<Result<Int>> = MutableLiveData()
+    private val _cityId: SingleLiveEvent<Result<Int>> = SingleLiveEvent()
     val cityId: LiveData<Result<Int>> = _cityId
 
     fun onGetWeatherList(lat: Double, lon: Double, cnt: Int) {

@@ -8,31 +8,23 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.fourthsemestr1.R
-import com.example.fourthsemestr1.WeatherApp
 import com.example.fourthsemestr1.databinding.FragmentDetailsBinding
 import com.example.fourthsemestr1.domain.entity.Weather
 import com.example.fourthsemestr1.presentation.common.convertors.TempColorConverter
-import com.example.fourthsemestr1.presentation.common.utils.AppViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var factory: AppViewModelFactory
+    private val args: DetailsFragmentArgs by navArgs()
 
-    private val viewModel: WeatherViewModel by viewModels {
-        factory
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        (activity?.application as WeatherApp).appComponent.inject(this)
-        super.onCreate(savedInstanceState)
-    }
+    private val viewModel: WeatherViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,9 +43,7 @@ class DetailsFragment : Fragment() {
 
         initObservers()
 
-        arguments?.getInt(getString(R.string.city_id))?.let {
-            viewModel.onGetWeather(it)
-        }
+        viewModel.onGetWeather(args.cityId)
     }
 
     private fun initObservers() {
