@@ -27,4 +27,3 @@ class GetWeatherUseCase @Inject constructor(
         }
     }
 }
-

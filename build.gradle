@@ -7,9 +7,9 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.3.1"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0-alpha09"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:2.37"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -26,13 +26,7 @@ scabbard {
     outputFormat "svg"
 }
 
-detekt {
-    buildUponDefaultConfig = true
 
-    source = files(projectDir)
-    config = files("${project.rootDir}/detekt.yml")
-    parallel = true
-}
 allprojects {
     /*repositories {
         google()
@@ -47,6 +41,13 @@ allprojects {
             }
         }
     }
+}
+detekt {
+    buildUponDefaultConfig = true
+
+    source = files(projectDir)
+    config = files("${project.rootDir}/detekt.yml")
+    parallel = true
 }
 
 task clean(type: Delete) {

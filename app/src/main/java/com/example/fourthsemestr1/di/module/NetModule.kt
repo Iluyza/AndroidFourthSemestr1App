@@ -2,12 +2,14 @@ package com.example.fourthsemestr1.di.module
 
 import androidx.viewbinding.BuildConfig
 import com.example.fourthsemestr1.data.api.Api
-import com.example.fourthsemestr1.di.annotation.ApiKey
-import com.example.fourthsemestr1.di.annotation.Lang
-import com.example.fourthsemestr1.di.annotation.Logger
-import com.example.fourthsemestr1.di.annotation.Units
+import com.example.fourthsemestr1.di.qualifier.ApiKeyInterceptor
+import com.example.fourthsemestr1.di.qualifier.LangInterceptor
+import com.example.fourthsemestr1.di.qualifier.LoggingInterceptor
+import com.example.fourthsemestr1.di.qualifier.UnitsInterceptor
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -25,11 +27,12 @@ private const val LANG = "RU"
 private const val QUERY_UNITS = "units"
 private const val UNITS = "metric"
 
+@InstallIn(SingletonComponent::class)
 @Module
 class NetModule {
 
     @Provides
-    @ApiKey
+    @ApiKeyInterceptor
     fun apiKeyInterceptor(): Interceptor = Interceptor { chain ->
         val request = chain.request()
         val newUrl = request.url.newBuilder()
@@ -44,7 +47,7 @@ class NetModule {
     }
 
     @Provides
-    @Lang
+    @LangInterceptor
     fun langInterceptor(): Interceptor = Interceptor { chain ->
         val request = chain.request()
         val newUrl = request.url.newBuilder()
@@ -59,7 +62,7 @@ class NetModule {
     }
 
     @Provides
-    @Units
+    @UnitsInterceptor
     fun unitsInterceptor(): Interceptor = Interceptor { chain ->
         val request = chain.request()
         val newUrl = request.url.newBuilder()
@@ -74,7 +77,7 @@ class NetModule {
     }
 
     @Provides
-    @Logger
+    @LoggingInterceptor
     fun provideLoggingInterceptor(): Interceptor {
         return HttpLoggingInterceptor()
             .setLevel(
@@ -107,10 +110,10 @@ class NetModule {
     @Provides
     fun provideOkhttpClient(
         cache: Cache,
-        @ApiKey apiKeyInterceptor: Interceptor,
-        @Lang langInterceptor: Interceptor,
-        @Units unitsInterceptor: Interceptor,
-        @Logger loggingInterceptor: Interceptor,
+        @ApiKeyInterceptor apiKeyInterceptor: Interceptor,
+        @LangInterceptor langInterceptor: Interceptor,
+        @UnitsInterceptor unitsInterceptor: Interceptor,
+        @LoggingInterceptor loggingInterceptor: Interceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .cache(cache)
